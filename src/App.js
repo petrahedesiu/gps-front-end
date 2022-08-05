@@ -14,12 +14,14 @@ export class MapContainer extends Component {
         super(props);
 
         this.state = {
-            busStations: [{latitude: 46.7673, longitude: 23.6016},
-                {latitude: 46.7728, longitude: 23.5890},
-                {latitude: 46.7717, longitude: 23.5920},
-                {latitude: 46.7696, longitude: 23.5871},
-                {latitude: 46.7712664, longitude: 23.6261106},
-                {latitude: 46.7732, longitude: 23.5973}]
+            busStations: [
+               {latitude: 46.7673, longitude: 23.6016, name:"Statia Piata Cipariu Sud"},
+                {latitude: 46.7728, longitude: 23.5890, name:"Statia Mihai Viteazu Est"},
+                {latitude: 46.7717, longitude: 23.5920, name:"Statia Sora"},
+                {latitude: 46.7696, longitude: 23.5871, name:"Statia Memorandumului"},
+                {latitude: 46.7712664, longitude: 23.6261106, name:"Statia Iulius Mall Est"},
+                {latitude: 46.7732, longitude: 23.5973, name:"Statia Regionala CFR"}
+            ]
         }
     }
 
