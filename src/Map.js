@@ -43,6 +43,7 @@ export class CurrentLocation extends React.Component {
             let center = new maps.LatLng(current.lat, current.lng);
             map.panTo(center);
         }
+        console.log(this.state);
     }
     componentDidMount()
     {
@@ -58,6 +59,16 @@ export class CurrentLocation extends React.Component {
                     });
                 });
             }
+            else {
+                this.setState( {
+                    currentLocation: {
+                        lat: 46.7711,
+                        lng: 23.6016
+                    }
+                });
+            }
+            console.log(this.state);
+            this.recenterMap();
         }
         this.loadMap();
     }
@@ -126,7 +137,7 @@ CurrentLocation.defaultProps = {
         lat: 46.7711,
         lng: 23.6016
     },
-    centerAroundCurrentLocation: false,
+    centerAroundCurrentLocation: true,
     visible: true
 };
 export default CurrentLocation;
