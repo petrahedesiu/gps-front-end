@@ -1,4 +1,3 @@
-//markers + current location shown on map
 import React, { Component } from 'react';
 import { GoogleApiWrapper, InfoWindow, Marker, Map } from 'google-maps-react';
 
@@ -69,5 +68,5 @@ displayMarkers = () => {
 }
 
 export default GoogleApiWrapper({
-    apiKey: 'AIzaSyC56J8E-ThBd4SKgyw8DLipCEDAq2tTTjI'
+    apiKey: 'API-KEY-GOES-HERE'
 })(MapContainer);
