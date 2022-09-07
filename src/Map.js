@@ -7,15 +7,14 @@ const mapStyles = {
         position: 'absolute',
         width: '100%',
         height: '100%',
+        style: 'style1'
     }
 };
 
 export class CurrentLocation extends React.Component {
     constructor(props) {
         super(props);
-
         const {lat, lng} = this.props.initialCenter;
-
         this.state = {
             currentLocation: {
                 lat: lat,
@@ -47,30 +46,29 @@ export class CurrentLocation extends React.Component {
     }
     componentDidMount()
     {
-        if (this.props.centerAroundCurrentLocation) {
-            if (navigator && navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(pos => {
-                    const coords = pos.coords;
-                    this.setState({
-                        currentLocation: {
-                            lat: coords.latitude,
-                            lng: coords.longitude
-                        }
-                    });
-                });
-            }
-            else {
-                this.setState( {
+       if (navigator && navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(pos => {
+                const coords = pos.coords;
+                this.setState({
                     currentLocation: {
-                        lat: 46.7711,
-                        lng: 23.6016
+                        lat: coords.latitude,
+                        lng: coords.longitude
                     }
                 });
-            }
-            console.log(this.state);
-            this.recenterMap();
+                console.log(pos.coords)
+            });
         }
-        this.loadMap();
+        else {
+            this.setState({
+                currentLocation: {
+                    lat:  46.770439,
+                    lng: 23.591423
+                }
+            });
+        }
+        //console.log(this.state);
+        this.recenterMap();
+    this.loadMap();
     }
     loadMap()
     {
@@ -92,7 +90,7 @@ export class CurrentLocation extends React.Component {
                 {},
                 {
                     center: center,
-                    zoom: zoom
+                    zoom: zoom,
                 }
             );
 
@@ -133,11 +131,11 @@ export class CurrentLocation extends React.Component {
 }
 CurrentLocation.defaultProps = {
     zoom: 14,
+    style: 'style1',
     initialCenter: {
-        lat: 46.7711,
-        lng: 23.6016
+        lat:  46.770439,
+        lng: 23.591423
     },
-    centerAroundCurrentLocation: true,
     visible: true
 };
 export default CurrentLocation;
