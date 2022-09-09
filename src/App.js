@@ -10,13 +10,22 @@ export class MapContainer extends Component {
         showingInfoWindow: false,
         activeMarker: {},
         selectedPlace: {},
-        busMarker: {}
+        busStations: [],
+        busStationsInitialised: false,
     };
 
     dataBase() {
         onValue (ref(db, "buses/" + 0), (snapshot) => {
             console.log('firebase', snapshot.val());
-            this.state.busStations = [snapshot.val()];
+            if (this.state.busStationsInitialised === false) {
+                this.setState({
+                    showingInfoWindow: false,
+                    activeMarker: {},
+                    selectedPlace: {},
+                    busStations: [snapshot.val()],
+                    busStationsInitialised: true
+                })
+            }
         });
     }
 
@@ -36,9 +45,8 @@ export class MapContainer extends Component {
         }
     };
     displayMarkers = () => {
-        if (this.state.busStations)
-        {
-            console.log('aa', this.state.busStations);
+        if (this.state.busStations) {
+            console.log('displayMarkers', this.state.busStations);
             return this.state.busStations.map((busStation, index) => {
                 return <Marker onClick={this.onMarkerClick} line={busStation.line} key={index} id={index} position={{
                     lat: busStation.lat,
@@ -50,7 +58,6 @@ export class MapContainer extends Component {
     }
 
     render() {
-
         this.dataBase();
         return (
             <CurrentLocation
@@ -73,5 +80,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-    apiKey: 'API-KEY-GOES-HERE'
+    apiKey: 'AIzaSyC56J8E-ThBd4SKgyw8DLipCEDAq2tTTjI'
 })(MapContainer);
