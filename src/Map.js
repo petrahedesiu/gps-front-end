@@ -7,7 +7,12 @@ const mapStyles = {
         position: 'absolute',
         width: '100%',
         height: '100%',
-        style: 'style1'
+        style: 'style',
+        featureType: 'all',
+        elementType: 'labels',
+        stylers: [
+            { visibility: 'off'}
+        ],
     }
 };
 
@@ -131,7 +136,7 @@ export class CurrentLocation extends React.Component {
 }
 CurrentLocation.defaultProps = {
     zoom: 14,
-    style: 'style1',
+    style: 'style',
     initialCenter: {
         lat:  46.770439,
         lng: 23.591423

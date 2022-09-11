@@ -10,20 +10,23 @@ export class MapContainer extends Component {
         showingInfoWindow: false,
         activeMarker: {},
         selectedPlace: {},
-        busStations: [],
-        busStationsInitialised: false,
+        busesLocation: [],
+        busesLocationInitialised: false,
     };
 
     dataBase() {
-        onValue (ref(db, "buses/" + 0), (snapshot) => {
+        onValue (ref(db, "buses/" + 1), (snapshot) => {
             console.log('firebase', snapshot.val());
-            if (this.state.busStationsInitialised === false) {
+            console.log('bus', JSON.stringify(this.state.busesLocation));
+            console.log('snapshot', JSON.stringify([snapshot.val()]));
+            if (JSON.stringify(this.state.busesLocation) !== JSON.stringify([snapshot.val()])) {
+                this.state.busesLocation = [snapshot.val()];
                 this.setState({
                     showingInfoWindow: false,
                     activeMarker: {},
                     selectedPlace: {},
-                    busStations: [snapshot.val()],
-                    busStationsInitialised: true
+                    busesLocation: [snapshot.val()],
+                    busesLocationInitialised: true,
                 })
             }
         });
@@ -45,12 +48,12 @@ export class MapContainer extends Component {
         }
     };
     displayMarkers = () => {
-        if (this.state.busStations) {
-            console.log('displayMarkers', this.state.busStations);
-            return this.state.busStations.map((busStation, index) => {
-                return <Marker onClick={this.onMarkerClick} line={busStation.line} key={index} id={index} position={{
-                    lat: busStation.lat,
-                    lng: busStation.lng
+            if (this.state.busesLocation) {
+            console.log('displayMarkers', this.state.busesLocation);
+            return this.state.busesLocation.map((busLocation, index) => {
+                return <Marker onClick={this.onMarkerClick} line={busLocation.line} key={index} id={index} position={{
+                    lat: busLocation.lat,
+                    lng: busLocation.lng
                 }}
                 />
             })
