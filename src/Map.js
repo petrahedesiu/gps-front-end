@@ -7,7 +7,16 @@ const mapStyles = {
         position: 'absolute',
         width: '100%',
         height: '100%',
+<<<<<<< Updated upstream
         style: 'style1'
+=======
+        style: 'style1',
+        featureType: 'all',
+        elementType: 'labels',
+        stylers: [
+            { visibility: 'off'}
+        ],
+>>>>>>> Stashed changes
     }
 };
 
