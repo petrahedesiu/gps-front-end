@@ -14,11 +14,6 @@ export class MapContainer extends Component {
     };
 
     dataBase() {
-<<<<<<< Updated upstream
-        onValue (ref(db, "buses/" + 0), (snapshot) => {
-            console.log('firebase', snapshot.val());
-            this.state.busStations = [snapshot.val()];
-=======
         onValue (ref(db, "buses/" + 1), (snapshot) => {
             if (JSON.stringify(this.state.busesLocation) !== JSON.stringify([snapshot.val()])) {
                 this.state.busesLocation = [snapshot.val()];
@@ -30,7 +25,6 @@ export class MapContainer extends Component {
                     busesLocationInitialised: true,
                 })
             }
->>>>>>> Stashed changes
         });
     }
 
@@ -51,15 +45,6 @@ export class MapContainer extends Component {
     };
 
     displayMarkers = () => {
-<<<<<<< Updated upstream
-        if (this.state.busStations)
-        {
-            console.log('aa', this.state.busStations);
-            return this.state.busStations.map((busStation, index) => {
-                return <Marker onClick={this.onMarkerClick} line={busStation.line} key={index} id={index} position={{
-                    lat: busStation.lat,
-                    lng: busStation.lng
-=======
         const busIcon = { url: 'https://img.icons8.com/material-outlined/344/bus.png', scaledSize: { width: 30, height: 30} };
         if (this.state.busesLocation) {
             console.log('displayMarkers', this.state.busesLocation);
@@ -67,7 +52,6 @@ export class MapContainer extends Component {
                 return <Marker onClick={this.onMarkerClick} title={busLocation.line} name={<div><h1 color="grey">{busLocation.line}</h1>{busLocation.id}</div>} icon={busIcon} position={{
                     lat: busLocation.lat,
                     lng: busLocation.lng
->>>>>>> Stashed changes
                 }}
                 />
         })
@@ -75,11 +59,7 @@ export class MapContainer extends Component {
     }
 
     render() {
-<<<<<<< Updated upstream
-
-=======
         const meIcon = { url: 'https://img.icons8.com/ios-glyphs/344/person-male.png', scaledSize: { width: 30, height: 30} };
->>>>>>> Stashed changes
         this.dataBase();
         return (
             <CurrentLocation
