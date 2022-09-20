@@ -1,19 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Map} from "google-maps-react";
 
 
 const mapStyles = {
-    map: {
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
-        style: 'style',
-        featureType: 'all',
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    style: 'style',
+    featureType: 'all',
         elementType: 'labels',
-        stylers: [
-            { visibility: 'off'}
-        ],
-    }
+    stylers: [
+        { visibility: 'off'}
+    ],
 };
 
 export class CurrentLocation extends React.Component {
@@ -125,7 +124,7 @@ export class CurrentLocation extends React.Component {
 
         return (
             <div>
-                <div style={style} ref="map">
+                <div style={mapStyles} ref="map">
                     Loading map...
                 </div>
                 {this.renderChildren()}

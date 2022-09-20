@@ -11,22 +11,18 @@ export class MapContainer extends Component {
         activeMarker: {},
         selectedPlace: {},
         busesLocation: [],
-        busesLocationInitialised: false,
     };
 
     dataBase() {
-        onValue (ref(db, "buses/" + 1), (snapshot) => {
+        onValue (ref(db, "buses"), (snapshot) => {
             console.log('firebase', snapshot.val());
-            console.log('bus', JSON.stringify(this.state.busesLocation));
-            console.log('snapshot', JSON.stringify([snapshot.val()]));
-            if (JSON.stringify(this.state.busesLocation) !== JSON.stringify([snapshot.val()])) {
-                this.state.busesLocation = [snapshot.val()];
+            if (JSON.stringify(this.state.busesLocation) !== JSON.stringify(snapshot.val())) {
+                this.state.busesLocation = snapshot.val();
                 this.setState({
                     showingInfoWindow: false,
                     activeMarker: {},
                     selectedPlace: {},
-                    busesLocation: [snapshot.val()],
-                    busesLocationInitialised: true,
+                    busesLocation: snapshot.val(),
                 })
             }
         });
