@@ -44,26 +44,28 @@ export class MapContainer extends Component {
         }
     };
     displayMarkers = () => {
-            if (this.state.busesLocation) {
-            console.log('displayMarkers', this.state.busesLocation);
-            return this.state.busesLocation.map((busLocation, index) => {
-                return <Marker onClick={this.onMarkerClick} line={busLocation.line} key={index} id={index} position={{
-                    lat: busLocation.lat,
-                    lng: busLocation.lng
-                }}
-                />
-            })
-        }
+        const busIcon = { url: 'https://img.icons8.com/material-outlined/344/bus.png', scaledSize: { width: 30, height: 30} };
+        if (this.state.busesLocation) {
+        console.log('displayMarkers', this.state.busesLocation);
+        return this.state.busesLocation.map((busLocation, index) => {
+            return <Marker onClick={this.onMarkerClick} title={busLocation.line} name={<div><h1 color="grey">{busLocation.line}</h1>id:{busLocation.id}</div>} icon={busIcon} position={{
+                lat: busLocation.lat,
+                lng: busLocation.lng
+            }}
+            />
+        })
     }
+}
 
     render() {
+        const meIcon = {url: 'https://img.icons8.com/ios-glyphs/344/person-male.png', scaledSize: { width: 30, height: 30}};
         this.dataBase();
         return (
             <CurrentLocation
                 google={this.props.google}
             >
                 {this.displayMarkers()}
-                <Marker onClick={this.onMarkerClick} name={'Current Location'} position={this.state.currentLocation}/>
+                <Marker onClick={this.onMarkerClick} name={<h2>YOU</h2>} icon={meIcon} animation position={this.state.currentLocation}/>
                 <InfoWindow
                     marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}
