@@ -4,6 +4,7 @@ import { db } from './firebase';
 import { ref, onValue } from 'firebase/database';
 
 import {CurrentLocation} from './Map';
+import mapStyle from "./style";
 
 export class MapContainer extends Component {
     state = {
@@ -44,10 +45,11 @@ export class MapContainer extends Component {
         }
     };
     displayMarkers = () => {
-            if (this.state.busesLocation) {
+        const busIcon = { url: 'https://img.icons8.com/material-outlined/344/bus.png', scaledSize: { width: 30, height: 30} };
+        if (this.state.busesLocation) {
             console.log('displayMarkers', this.state.busesLocation);
             return this.state.busesLocation.map((busLocation, index) => {
-                return <Marker onClick={this.onMarkerClick} line={busLocation.line} key={index} id={index} position={{
+                return <Marker onClick={this.onMarkerClick} title={busLocation.line} name={<div><h1 color="grey">{busLocation.line}</h1>id:{busLocation.id}</div>} icon={busIcon} position={{
                     lat: busLocation.lat,
                     lng: busLocation.lng
                 }}
@@ -56,14 +58,23 @@ export class MapContainer extends Component {
         }
     }
 
+    _mapLoaded(mapProps, map) {
+        map.setOptions({
+            styles: mapStyle
+        })
+    }
     render() {
+        const meIcon = {url: 'https://img.icons8.com/ios-glyphs/344/person-male.png', scaledSize: { width: 30, height: 30}};
         this.dataBase();
+        console.log('selectedPLace name', this.state.selectedPlace.name);
         return (
             <CurrentLocation
                 google={this.props.google}
+                onReady={(mapProps, map) => this._mapLoaded(mapProps, map)}
             >
                 {this.displayMarkers()}
-                <Marker onClick={this.onMarkerClick} name={'Current Location'} position={this.state.currentLocation}/>
+                {/*<Marker onClick={this.onMarkerClick} name={'Current Location'} position={this.state.currentLocation}/>*/}
+                <Marker onClick={this.onMarkerClick} name={<h2>Me</h2>} icon={meIcon} animation position={this.props.currentLocation}/>
                 <InfoWindow
                     marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}

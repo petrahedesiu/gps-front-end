@@ -1,19 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import mapStyle from './style';
 import {Map} from "google-maps-react";
-
-
-const mapStyles = {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    style: 'style',
-    featureType: 'all',
-        elementType: 'labels',
-    stylers: [
-        { visibility: 'off'}
-    ],
-};
 
 export class CurrentLocation extends React.Component {
     constructor(props) {
@@ -50,7 +38,7 @@ export class CurrentLocation extends React.Component {
     }
     componentDidMount()
     {
-       if (navigator && navigator.geolocation) {
+        if (navigator && navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(pos => {
                 const coords = pos.coords;
                 this.setState({
@@ -72,7 +60,7 @@ export class CurrentLocation extends React.Component {
         }
         //console.log(this.state);
         this.recenterMap();
-    this.loadMap();
+        this.loadMap();
     }
     loadMap()
     {
@@ -95,6 +83,7 @@ export class CurrentLocation extends React.Component {
                 {
                     center: center,
                     zoom: zoom,
+                    // mapContainerStyle: mapStyle,
                 }
             );
 
@@ -120,15 +109,19 @@ export class CurrentLocation extends React.Component {
     }
     render()
     {
-        const style = Object.assign({}, mapStyles.map);
+        // const style = Object.assign({}, mapStyle.map);
 
         return (
-            <div>
-                <div style={mapStyles} ref="map">
+            <Map /* id="mymap"*/
+                styles={mapStyle}
+                initialCenter={{lat: 46.7514, lng: 23.5758}}
+                google={this.props.google}
+            >
+                <div  ref="map">
                     Loading map...
                 </div>
                 {this.renderChildren()}
-            </div>
+            </Map>
         );
     }
 
