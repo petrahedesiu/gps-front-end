@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import mapStyle from './style';
 import {Map} from "google-maps-react";
 
+
 export class CurrentLocation extends React.Component {
     constructor(props) {
         super(props);
@@ -107,10 +108,10 @@ export class CurrentLocation extends React.Component {
             });
         });
     }
+
     render()
     {
         // const style = Object.assign({}, mapStyle.map);
-
         console.log(this.props.currentLocation)
         return (
             <Map /* id="mymap"*/
