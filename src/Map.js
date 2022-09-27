@@ -111,10 +111,14 @@ export class CurrentLocation extends React.Component {
     {
         // const style = Object.assign({}, mapStyle.map);
 
+        console.log(this.props.currentLocation)
         return (
             <Map /* id="mymap"*/
                 styles={mapStyle}
-                initialCenter={{lat: 46.7514, lng: 23.5758}}
+                initialCenter={{
+                    lat: this.state.currentLocation.lat,
+                    lng: this.state.currentLocation.lng
+                }}
                 google={this.props.google}
             >
                 <div  ref="map">
@@ -127,11 +131,10 @@ export class CurrentLocation extends React.Component {
 
 }
 CurrentLocation.defaultProps = {
-    zoom: 14,
-    style: 'style',
+    zoom: 10,
     initialCenter: {
-        lat:  46.770439,
-        lng: 23.591423
+        lat:  46.7514,
+        lng: 23.5758
     },
     visible: true
 };
