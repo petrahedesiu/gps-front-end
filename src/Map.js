@@ -115,12 +115,18 @@ export class CurrentLocation extends React.Component {
         console.log(this.props.currentLocation)
         return (
             <Map /* id="mymap"*/
+                google={this.props.google}
                 styles={mapStyle}
+                zoomControl={false}
+                mapTypeControl={false}
+                streetViewControl={false}
+                routeControl={false}
+                scaleControl={false}
+                fullscreenControl={false}
                 initialCenter={{
                     lat: this.state.currentLocation.lat,
                     lng: this.state.currentLocation.lng
                 }}
-                google={this.props.google}
             >
                 <div  ref="map">
                     Loading map...
