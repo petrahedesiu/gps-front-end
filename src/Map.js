@@ -9,6 +9,7 @@ export class CurrentLocation extends React.Component {
         super(props);
         const {lat, lng} = this.props.initialCenter;
         this.state = {
+            allowedLocation: false,
             currentLocation: {
                 lat: lat,
                 lng: lng
@@ -43,6 +44,7 @@ export class CurrentLocation extends React.Component {
             navigator.geolocation.getCurrentPosition(pos => {
                 const coords = pos.coords;
                 this.setState({
+                    allowedLocation: true,
                     currentLocation: {
                         lat: coords.latitude,
                         lng: coords.longitude
@@ -54,7 +56,7 @@ export class CurrentLocation extends React.Component {
         else {
             this.setState({
                 currentLocation: {
-                    lat:  46.770439,
+                    lat: 46.770439,
                     lng: 23.591423
                 }
             });
@@ -112,7 +114,7 @@ export class CurrentLocation extends React.Component {
     render()
     {
         // const style = Object.assign({}, mapStyle.map);
-        console.log(this.props.currentLocation)
+        console.log('Map currentLocation', this.state.currentLocation)
         return (
             <Map /* id="mymap"*/
                 google={this.props.google}
@@ -123,7 +125,7 @@ export class CurrentLocation extends React.Component {
                 routeControl={false}
                 scaleControl={false}
                 fullscreenControl={false}
-                initialCenter={{
+                center={{
                     lat: this.state.currentLocation.lat,
                     lng: this.state.currentLocation.lng
                 }}
@@ -140,8 +142,8 @@ export class CurrentLocation extends React.Component {
 CurrentLocation.defaultProps = {
     zoom: 10,
     initialCenter: {
-        lat:  46.7514,
-        lng: 23.5758
+        lat: 46.770439,
+        lng: 23.591423
     },
     visible: true
 };

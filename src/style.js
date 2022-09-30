@@ -1,11 +1,4 @@
 const mapStyle = [
-    // {
-    //     "zoomControl": "false",
-    //     "mapTypeControl": "false",
-    //     "scaleControl": "false",
-    //     "streetViewControl": "false",
-    //     "fullscreenControl": "false",
-    // },
     {
         "featureType": "all",
         "elementType": "geometry.fill",

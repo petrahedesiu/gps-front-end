@@ -19,11 +19,8 @@ export class MapContainer extends Component {
         onValue (ref(db, "buses"), (snapshot) => {
             console.log('firebase buses', snapshot.val());
             if (JSON.stringify(this.state.busesLocation) !== JSON.stringify(snapshot.val())) {
-                this.state.busesLocation = snapshot.val();
                 this.setState({
                     showingInfoWindow: false,
-                    activeMarker: {},
-                    selectedPlace: {},
                     busesLocation: snapshot.val(),
                 })
             }
@@ -68,7 +65,7 @@ export class MapContainer extends Component {
     }
 
     displayStationsMarkers = () => {
-        const stationIcon = { url: "https://i.im.ge/2022/09/27/1yWfsx.bus-station-marker.png", scaledSize: { width: 10, height: 10} };
+        const stationIcon = { url: "https://i.im.ge/2022/09/27/1yWfsx.bus-station-marker.png", scaledSize: { width: 12, height: 12} };
         if (this.state.busStations) {
             return this.state.busStations.map((busStation, index) => {
                 return <Marker onClick={this.onMarkerClick} title={busStation.name} name={<div><h1 color="grey">{busStation.name}</h1></div>} icon={stationIcon} position={{
@@ -82,17 +79,22 @@ export class MapContainer extends Component {
 
     _mapLoaded(mapProps, map) {
         map.setOptions({
-            // disableDefaultUI: false, // a way to quickly hide all controls
-            // mapTypeControl: false,
-            // scaleControl: false,
-            // zoomControl: false,
             styles: mapStyle
         })
+    }
+
+    isAllowed() {
+        console.log('App allowed', <CurrentLocation>{this.state.allowedLocation}</CurrentLocation>)
+        if (<CurrentLocation>{this.state.allowedLocation}</CurrentLocation> === true)
+            return 1;
+        return 0;
     }
     render() {
         const meIcon = {url: 'https://img.icons8.com/ios-glyphs/344/person-male.png', scaledSize: { width: 30, height: 30}};
         this.dataBase();
-        console.log('selectedPLace name', this.state.selectedPlace.name);
+        const isAllowedConst= this.isAllowed();
+        console.log('isAllowedConst', isAllowedConst);
+       // console.log('App currentLocation 2', CurrentLocation.state.currentLocation)
         return (
             <CurrentLocation
                 google={this.props.google}
@@ -100,8 +102,14 @@ export class MapContainer extends Component {
             >
                 {this.displayBusMarkers()}
                 {this.displayStationsMarkers()}
-                {/*<Marker onClick={this.onMarkerClick} name={'Current Location'} position={this.state.currentLocation}/>*/}
-                <Marker onClick={this.onMarkerClick} name={<h2>Me</h2>} icon={meIcon} animation position={this.props.currentLocation}/>
+                {/*<div>*/}
+                {/*    {isAllowedConst ? (*/}
+                {/*        <Marker onClick={this.onMarkerClick} name={<h2>Me</h2>} icon={meIcon} animation position={this.state.currentLocation}/>*/}
+                {/*    ):(*/}
+                {/*        console.log('blocked location')*/}
+                {/*    )}*/}
+                {/*</div>*/}
+                <Marker onClick={this.onMarkerClick} name={<h2>Me</h2>} icon={meIcon} animation position={this.state.currentLocation}/>
                 <InfoWindow
                     marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}
