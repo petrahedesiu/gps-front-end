@@ -4,12 +4,14 @@ import mapStyle from './style';
 import {Map} from "google-maps-react";
 
 
+var allowedLocation = 0;
+
 export class CurrentLocation extends React.Component {
     constructor(props) {
         super(props);
         const {lat, lng} = this.props.initialCenter;
         this.state = {
-            allowedLocation: false,
+            //allowedLocation: false,
             currentLocation: {
                 lat: lat,
                 lng: lng
@@ -44,12 +46,12 @@ export class CurrentLocation extends React.Component {
             navigator.geolocation.getCurrentPosition(pos => {
                 const coords = pos.coords;
                 this.setState({
-                    allowedLocation: true,
                     currentLocation: {
                         lat: coords.latitude,
                         lng: coords.longitude
                     }
                 });
+                allowedLocation = 1;
                 console.log(pos.coords)
             });
         }
@@ -148,3 +150,4 @@ CurrentLocation.defaultProps = {
     visible: true
 };
 export default CurrentLocation;
+export {allowedLocation};

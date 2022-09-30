@@ -3,7 +3,7 @@ import { GoogleApiWrapper, InfoWindow, Marker, Map } from 'google-maps-react';
 import { db } from './firebase';
 import { ref, onValue } from 'firebase/database';
 
-import {CurrentLocation} from './Map';
+import {allowedLocation, CurrentLocation} from './Map';
 import mapStyle from "./style";
 
 export class MapContainer extends Component {
@@ -84,10 +84,8 @@ export class MapContainer extends Component {
     }
 
     isAllowed() {
-        console.log('App allowed', <CurrentLocation>{this.state.allowedLocation}</CurrentLocation>)
-        if (<CurrentLocation>{this.state.allowedLocation}</CurrentLocation> === true)
-            return 1;
-        return 0;
+        console.log('App allowed', allowedLocation)
+        return allowedLocation;
     }
     render() {
         const meIcon = {url: 'https://img.icons8.com/ios-glyphs/344/person-male.png', scaledSize: { width: 30, height: 30}};
@@ -102,14 +100,14 @@ export class MapContainer extends Component {
             >
                 {this.displayBusMarkers()}
                 {this.displayStationsMarkers()}
-                {/*<div>*/}
-                {/*    {isAllowedConst ? (*/}
-                {/*        <Marker onClick={this.onMarkerClick} name={<h2>Me</h2>} icon={meIcon} animation position={this.state.currentLocation}/>*/}
-                {/*    ):(*/}
-                {/*        console.log('blocked location')*/}
-                {/*    )}*/}
-                {/*</div>*/}
-                <Marker onClick={this.onMarkerClick} name={<h2>Me</h2>} icon={meIcon} animation position={this.state.currentLocation}/>
+
+                    {isAllowedConst ? (
+                        <Marker onClick={this.onMarkerClick} name={<h2>Me</h2>} icon={meIcon} animation position={this.state.currentLocation}/>
+                    ):(
+                        console.log('blocked location')
+                    )}
+
+                {/*<Marker onClick={this.onMarkerClick} name={<h2>Me</h2>} icon={meIcon} animation position={this.state.currentLocation}/>*/}
                 <InfoWindow
                     marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}
