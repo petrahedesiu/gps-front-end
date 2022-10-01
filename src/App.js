@@ -17,16 +17,13 @@ export class MapContainer extends Component {
 
     dataBase() {
         onValue (ref(db, "buses"), (snapshot) => {
-            console.log('firebase buses', snapshot.val());
             if (JSON.stringify(this.state.busesLocation) !== JSON.stringify(snapshot.val())) {
                 this.setState({
-                    showingInfoWindow: false,
                     busesLocation: snapshot.val(),
                 })
             }
         });
         onValue (ref(db, "stations"), (snapshot) => {
-            console.log('firebase stations', snapshot.val());
             if (JSON.stringify(this.state.busStations) !== JSON.stringify(snapshot.val())) {
                 this.setState({
                     busStations: snapshot.val(),
@@ -53,7 +50,6 @@ export class MapContainer extends Component {
     displayBusMarkers = () => {
         const busIcon = { url: 'https://img.icons8.com/material-outlined/344/bus.png', scaledSize: { width: 30, height: 30} };
         if (this.state.busesLocation) {
-            console.log('displayBusMarkers', this.state.busesLocation);
             return this.state.busesLocation.map((busLocation, index) => {
                 return <Marker onClick={this.onMarkerClick} title={busLocation.line} name={<div><h1 color="grey">{busLocation.line}</h1>id:{busLocation.id}</div>} icon={busIcon} position={{
                     lat: busLocation.lat,
@@ -83,16 +79,9 @@ export class MapContainer extends Component {
         })
     }
 
-    isAllowed() {
-        console.log('App allowed', allowedLocation)
-        return allowedLocation;
-    }
     render() {
         const meIcon = {url: 'https://img.icons8.com/ios-glyphs/344/person-male.png', scaledSize: { width: 30, height: 30}};
         this.dataBase();
-        const isAllowedConst= this.isAllowed();
-        console.log('isAllowedConst', isAllowedConst);
-       // console.log('App currentLocation 2', CurrentLocation.state.currentLocation)
         return (
             <CurrentLocation
                 google={this.props.google}
@@ -101,11 +90,11 @@ export class MapContainer extends Component {
                 {this.displayBusMarkers()}
                 {this.displayStationsMarkers()}
 
-                    {isAllowedConst ? (
-                        <Marker onClick={this.onMarkerClick} name={<h2>Me</h2>} icon={meIcon} animation position={this.state.currentLocation}/>
-                    ):(
-                        console.log('blocked location')
-                    )}
+                {allowedLocation ? (
+                    <Marker onClick={this.onMarkerClick} name={<h2>Me</h2>} icon={meIcon} animation />
+                ):(
+                    console.log('blocked location')
+                )}
 
                 {/*<Marker onClick={this.onMarkerClick} name={<h2>Me</h2>} icon={meIcon} animation position={this.state.currentLocation}/>*/}
                 <InfoWindow

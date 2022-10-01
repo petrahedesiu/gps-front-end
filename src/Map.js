@@ -11,7 +11,6 @@ export class CurrentLocation extends React.Component {
         super(props);
         const {lat, lng} = this.props.initialCenter;
         this.state = {
-            //allowedLocation: false,
             currentLocation: {
                 lat: lat,
                 lng: lng
@@ -38,32 +37,31 @@ export class CurrentLocation extends React.Component {
             let center = new maps.LatLng(current.lat, current.lng);
             map.panTo(center);
         }
-        console.log(this.state);
     }
     componentDidMount()
     {
         if (navigator && navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(pos => {
                 const coords = pos.coords;
+                allowedLocation = 1;
                 this.setState({
                     currentLocation: {
                         lat: coords.latitude,
                         lng: coords.longitude
                     }
                 });
-                allowedLocation = 1;
                 console.log(pos.coords)
             });
         }
         else {
+            allowedLocation = 0;
             this.setState({
                 currentLocation: {
-                    lat: 46.770439,
-                    lng: 23.591423
-                }
+                    lat: 46.75137,
+                    lng: 23.57586
+                },
             });
         }
-        //console.log(this.state);
         this.recenterMap();
         this.loadMap();
     }
@@ -116,7 +114,6 @@ export class CurrentLocation extends React.Component {
     render()
     {
         // const style = Object.assign({}, mapStyle.map);
-        console.log('Map currentLocation', this.state.currentLocation)
         return (
             <Map /* id="mymap"*/
                 google={this.props.google}
@@ -127,7 +124,7 @@ export class CurrentLocation extends React.Component {
                 routeControl={false}
                 scaleControl={false}
                 fullscreenControl={false}
-                center={{
+                initialCenter={{
                     lat: this.state.currentLocation.lat,
                     lng: this.state.currentLocation.lng
                 }}
@@ -144,8 +141,8 @@ export class CurrentLocation extends React.Component {
 CurrentLocation.defaultProps = {
     zoom: 10,
     initialCenter: {
-        lat: 46.770439,
-        lng: 23.591423
+        lat: 46.75137,
+        lng: 23.57586
     },
     visible: true
 };
